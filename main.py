@@ -51,7 +51,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text='お疲れ様です！'),
+                TextSendMessage(text='君が来るの待っていた♪～'),
                 TextSendMessage(text='今日のランチは:'),
                 TextSendMessage(text=(menu.okazu())),
             ]
