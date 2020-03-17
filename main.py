@@ -56,6 +56,13 @@ def handle_message(event):
                 TextSendMessage(text=(menu.okazu())),
             ]
         )
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text='「おかず」って言ってくれたらいいものあげるよ♪'),
+            ]
+        )
 
 
 if __name__ == "__main__":
