@@ -60,7 +60,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text='「おかず」って言ってくれたらいいものあげるよ♪'),
+                TextSendMessage(text='「今日のランチ」って言ってくれたらいいものあげるよ♪'),
             ]
         )
 
