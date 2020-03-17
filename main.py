@@ -10,6 +10,11 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 import os
+from menu import Menu
+
+# Menuインスタンス生成
+# TODO:辞書型を修正する予定
+menu = Menu()
 
 app = Flask(__name__)
 
@@ -42,9 +47,15 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+    if event.message.text == "今日のランチ":
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text='お疲れ様です！'),
+                TextSendMessage(text='今日のランチは:'),
+                TextSendMessage(text=(menu.okazu())),
+            ]
+        )
 
 
 if __name__ == "__main__":
