@@ -64,6 +64,15 @@ def handle_message(event):
             ]
         )
 
+    if event.message.text == "位置情報":
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text='位置情報を教えてください。'),
+                TextSendMessage(text='line://nv/location')
+            ]
+        )
+
 
 if __name__ == "__main__":
     #    app.run()
