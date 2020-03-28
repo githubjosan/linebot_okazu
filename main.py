@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, LocationMessage
 )
 import os
 from menu import Menu
@@ -39,6 +39,7 @@ def callback():
     # handle webhook body
     try:
         handler.handle(body, signature)
+
     except InvalidSignatureError:
         abort(400)
 
@@ -56,6 +57,15 @@ def handle_message(event):
                 TextSendMessage(text=(menu.okazu())),
             ]
         )
+    elif event.message.text == "位置情報":
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text='位置情報を教えてください。'),
+                TextSendMessage(text='line://nv/location')
+            ]
+        )
+
     else:
         line_bot_api.reply_message(
             event.reply_token,
@@ -64,14 +74,15 @@ def handle_message(event):
             ]
         )
 
-    if event.message.text == "位置情報":
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text='位置情報を教えてください。'),
-                TextSendMessage(text='line://nv/location')
-            ]
-        )
+
+@handler.add(MessageEvent, message=LocationMessage)
+def handle_location(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(
+            text="{}\n{}\n{}".format(event.message.address, event.message.latitude, event.message.longitude)),
+
+    )
 
 
 if __name__ == "__main__":
